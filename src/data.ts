@@ -25,5 +25,5 @@ export const reports: Report[] = [];
 
 export enum ReportType {
   INCOME = 'income',
-  EXPENSE = 'Expense',
+  EXPENSE = 'expense',
 }
