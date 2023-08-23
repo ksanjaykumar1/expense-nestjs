@@ -1,28 +1,49 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { ReportType } from './data';
+import { CreateReportDto } from './dto/create-report.dto';
+import { AppService } from './app.service';
 
-@Controller('reports/income')
+@Controller('reports/:type')
 export class AppController {
+  constructor(private readonly appService: AppService) {}
   @Get()
-  getAllReports() {
-    return [];
+  getAllReports(@Param('type') type: ReportType) {
+    return this.appService.getAllReports(type);
   }
   @Get('/:id')
-  getReportById(@Param('id') id: string) {
-    return id;
+  getReportById(@Param('type') type: ReportType, @Param('id') id: string) {
+    return this.appService.getReportById(type, id);
   }
 
   @Post()
-  createReport() {
-    return 'Created';
+  createReport(
+    @Param('type') type: ReportType,
+    @Body() createReportDto: CreateReportDto,
+  ) {
+    return this.appService.createReport(type, createReportDto);
   }
 
   @Put(':id')
-  updateReport() {
-    return 'Updated';
+  updateReport(
+    @Param('type') type: ReportType,
+    @Param('id') id: string,
+    @Body() createReportDto: CreateReportDto,
+  ) {
+    return this.appService.updateReport(type, id, createReportDto);
   }
 
+  @HttpCode(204)
   @Delete(':id')
-  deleteReport() {
-    return 'Deleted';
+  deleteReport(@Param('type') type: ReportType, @Param('id') id: string) {
+    return this.appService.deleteReport(type, id);
   }
 }
