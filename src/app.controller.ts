@@ -14,19 +14,20 @@ import { ReportType } from './data';
 import { CreateReportDto } from './dto/create-report.dto';
 import { AppService } from './app.service';
 import { UpdateReportDto } from './dto/update-report.dto';
+import { ReportResponseDto } from './dto/report-response.dto';
 
 @Controller('reports/:type')
 export class AppController {
   constructor(private readonly appService: AppService) {}
   @Get()
-  getAllReports(@Param('type') type: ReportType) {
+  getAllReports(@Param('type') type: ReportType): ReportResponseDto[] {
     return this.appService.getAllReports(type);
   }
   @Get('/:id')
   getReportById(
     @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Param('id', ParseUUIDPipe) id: string,
-  ) {
+  ): ReportResponseDto {
     return this.appService.getReportById(type, id);
   }
 
@@ -34,7 +35,7 @@ export class AppController {
   createReport(
     @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Body() createReportDto: CreateReportDto,
-  ) {
+  ): ReportResponseDto {
     return this.appService.createReport(type, createReportDto);
   }
 
@@ -43,7 +44,7 @@ export class AppController {
     @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateReportDto: UpdateReportDto,
-  ) {
+  ): ReportResponseDto {
     return this.appService.updateReport(type, id, updateReportDto);
   }
 
