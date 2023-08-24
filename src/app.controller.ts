@@ -13,6 +13,7 @@ import {
 import { ReportType } from './data';
 import { CreateReportDto } from './dto/create-report.dto';
 import { AppService } from './app.service';
+import { UpdateReportDto } from './dto/update-report.dto';
 
 @Controller('reports/:type')
 export class AppController {
@@ -41,9 +42,9 @@ export class AppController {
   updateReport(
     @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() createReportDto: CreateReportDto,
+    @Body() updateReportDto: UpdateReportDto,
   ) {
-    return this.appService.updateReport(type, id, createReportDto);
+    return this.appService.updateReport(type, id, updateReportDto);
   }
 
   @HttpCode(204)

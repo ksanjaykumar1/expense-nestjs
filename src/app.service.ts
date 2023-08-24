@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReportType, data } from './data';
 import { v4 as uuid } from 'uuid';
 import { CreateReportDto } from './dto/create-report.dto';
+import { UpdateReportDto } from './dto/update-report.dto';
 
 @Injectable()
 export class AppService {
@@ -26,8 +27,8 @@ export class AppService {
     data.report.push(newReport);
     return newReport;
   }
-  updateReport(type: ReportType, id: string, createReportDto: CreateReportDto) {
-    const { source, amount } = createReportDto;
+  updateReport(type: ReportType, id: string, updateReportDto: UpdateReportDto) {
+    const { source, amount } = updateReportDto;
 
     const reportToUpdate = data.report
       .filter((report) => report.type === type)
