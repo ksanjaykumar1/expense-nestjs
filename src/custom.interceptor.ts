@@ -1,6 +1,5 @@
 import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
-import { data } from './data';
 
 export class CustomInterceptor implements NestInterceptor {
   intercept(
@@ -10,11 +9,11 @@ export class CustomInterceptor implements NestInterceptor {
     console.log('Intercepting request');
 
     return handler.handle().pipe(
-      map(() => {
+      map((data) => {
         console.log('Intercepting response');
         const response = {
-          ...data.report[0],
-          createdAt: data.report[0].created_at,
+          ...data,
+          createdAt: data.created_at,
         };
         delete response.updated_at;
         delete response.created_at;
