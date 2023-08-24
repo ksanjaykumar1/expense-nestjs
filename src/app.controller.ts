@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   Param,
+  ParseEnumPipe,
   ParseUUIDPipe,
   Post,
   Put,
@@ -22,7 +23,7 @@ export class AppController {
   }
   @Get('/:id')
   getReportById(
-    @Param('type') type: ReportType,
+    @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.appService.getReportById(type, id);
@@ -30,7 +31,7 @@ export class AppController {
 
   @Post()
   createReport(
-    @Param('type') type: ReportType,
+    @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Body() createReportDto: CreateReportDto,
   ) {
     return this.appService.createReport(type, createReportDto);
@@ -38,7 +39,7 @@ export class AppController {
 
   @Put(':id')
   updateReport(
-    @Param('type') type: ReportType,
+    @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() createReportDto: CreateReportDto,
   ) {
@@ -48,7 +49,7 @@ export class AppController {
   @HttpCode(204)
   @Delete(':id')
   deleteReport(
-    @Param('type') type: ReportType,
+    @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
     @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.appService.deleteReport(type, id);
